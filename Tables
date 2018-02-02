@@ -1,0 +1,42 @@
+create table Application
+(application_id number(5) primary key, full_name varchar2(20), date_of_birth date,
+highest_qualification varchar2(10),
+marks_obtained number, goals varchar2(20), email_id varchar2(20), Scheduled_program_id varchar2(5) references
+Programs_Scheduled(Scheduled_program_id),
+status varchar2(10), date_of_interview date);
+
+create table Programs_Offered
+(program_name varchar2(5) primary key, description varchar2(20), applicant_eligibility varchar2(40),
+	duration number, degree_certificate_offered varchar2(10));
+
+create table Programs_Scheduled
+(Scheduled_program_id varchar2(5) primary key, ProgramName varchar2(5) references 
+	Programs_Offered(program_name), 
+	Location varchar2(10), start_date date, end_date date, sessions_per_week number);
+
+create table program_location 
+(Scheduled_program_id varchar2(5) references Programs_Scheduled(Scheduled_program_id), city varchar2(20), state varchar2(20), zipcode number, Location varchar2(20) );
+
+create table Participant
+(roll_no varchar2(5) primary key, email_id varchar2(20), application_id number(5) references 
+	Application(application_id), Scheduled_program_id varchar2(5) references Programs_Scheduled(Scheduled_program_id));
+
+create table users
+(login_id varchar2(5), password varchar2(10), role varchar2(5));
+
+
+create sequence "APPLICATION_ID_SEQ"
+minvalue 1000 maxvalue 999999999999
+increment by 1 start with 1000 cache 20
+noorder nocycle;
+
+create sequence "SCHEDULED_PGM_SEQ"
+minvalue 2000 maxvalue 999999999999
+increment by 1 start with 2000 cache 20
+noorder nocycle;
+
+create sequence "ROLL_NO_SEQ"
+minvalue 3000 maxvalue 999999999999
+increment by 1 start with 3000 cache 20
+noorder nocycle;
+
